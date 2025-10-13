@@ -23,7 +23,7 @@ end;
 local aim_at = newcclosure(function(pos: Vector2)
     if (user_input_service.MouseBehavior == Enum.MouseBehavior.Default) then return end;
     local mouse_sen = (user_input_service.MouseDeltaSensitivity);
-    local mouse_pos = user_input_service:GetMouseLocation();
+    local mouse_pos = user_input_service:GetMouseLocation() * 0.5;
     mousemoverel(((pos.X - mouse_pos.X) / mouse_sen) / mouse_sen, ((pos.Y - mouse_pos.Y) / mouse_sen) / mouse_sen);
 end);
 
