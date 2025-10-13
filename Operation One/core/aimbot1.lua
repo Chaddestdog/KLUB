@@ -22,9 +22,9 @@ end;
 
 local aim_at = newcclosure(function(pos: Vector2)
     if (user_input_service.MouseBehavior == Enum.MouseBehavior.Default) then return end;
-    local mouse_sen = (user_input_service.MouseDeltaSensitivity / 2);
+    local mouse_sen = (user_input_service.MouseDeltaSensitivity);
     local mouse_pos = user_input_service:GetMouseLocation();
-    mousemoverel((pos.X - mouse_pos.X) / mouse_sen, (pos.Y - mouse_pos.Y) / mouse_sen);
+    mousemoverel(((pos.X - mouse_pos.X) / mouse_sen) / mouse_sen, ((pos.Y - mouse_pos.Y) / mouse_sen) / mouse_sen);
 end);
 
 local find_closest = function()
