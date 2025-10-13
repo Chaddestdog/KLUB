@@ -79,8 +79,8 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
             save_manager:SetIgnoreIndexes({"MenuKeybind"});
             theme_manager:SetFolder("KLUB");
             save_manager:SetFolder("KLUB/Operation One");
-            save_manager:BuildConfigSection(save_manager);
-            theme_manager:ApplyToTab(save_manager);
+            save_manager:BuildConfigSection(ui_settings);
+            theme_manager:ApplyToTab(ui_settings);
             save_manager:LoadAutoloadConfig();
         end;
     end;
