@@ -7,7 +7,8 @@ local run_service: RunService;
 local camera = cloneref(workspace.CurrentCamera);
 
 rawset(player_esp, "set_player_esp", newcclosure(function(character: Model)
-    if (not (character:IsA("Model") and character:FindFirstChild("EnemyHighlight")) and has_esp[character]) then return end;
+    task.wait(0.5);
+    if (not (character:IsA("Model") and character:FindFirstChild("EnemyHighlight")) or has_esp[character]) then return end;
     local name:      string = character.Name:gsub("Viewmodels/", "");
     local humanoid:  Humanoid = players[name].Character:FindFirstChildOfClass("Humanoid");
     local torso:     Part = character:FindFirstChild("torso");
