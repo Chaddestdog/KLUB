@@ -57,7 +57,7 @@ rawset(player_esp, "set_player_esp", newcclosure(function(character: Model)
     c1 = run_service.RenderStepped:Connect(function(delta: number)
         local point, on = to_view_point(torso.CFrame.Position);
         if (on) then
-            for i, v in next, (esp_ran) do v(has_esp[character]) end;
+            for i, v in next, (esp_ran) do v(has_esp[character], point) end;
            
 
             local cf_mid, size = character:GetBoundingBox();
