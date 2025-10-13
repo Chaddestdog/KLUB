@@ -68,6 +68,14 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
                     esp_player_settings.health_bar = value;
                 end});
 
+                local player_esp_skelton = player_esp_groupbox:AddToggle('player_esp_skelton', {Text = "Skelton", Default = false, Callback = function(value: boolean)
+                    esp_player_settings.skelton = value;
+                end});
+
+                player_esp_skelton:AddColorPicker('player_esp_skelton_color', {Default = Color3.fromRGB(255, 255, 255), Title = "Skelton Color", Callback = function(value: boolean)
+                    esp_player_settings.skelton_color = value;
+                end});
+
             end;
 
         end;
