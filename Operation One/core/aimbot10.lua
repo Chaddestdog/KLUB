@@ -9,7 +9,7 @@ local settings = {
     circle = Drawing.new("Circle"),
     screen_middle = (camera.ViewportSize / 2),
     target = "head",
-    smoothing = 125
+    smoothing = 500
 };
 
 local screen_middle = settings.screen_middle;
@@ -30,7 +30,7 @@ local aim_at = newcclosure(function(pos: Vector3)
         start += (delta * 1000);
         local lerp = math.clamp(start / settings.smoothing, 0, 1);
         local base_cfrmae = camera.CFrame:Lerp(CFrame.lookAt(camera.CFrame.Position, pos, Vector3.new(0, 1, 0)), (1 - (1 - lerp) ^ 2));
-        rot += (user_input_service:GetMouseDelta() * 0.0025)
+        rot += (user_input_service:GetMouseDelta() * 0.00025)
 
         camera.CFrame = base_cfrmae * CFrame.Angles(0, -rot.X, 0) * CFrame.Angles(-rot.Y, 0, 0)
 
