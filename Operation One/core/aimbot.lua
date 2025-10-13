@@ -7,12 +7,10 @@ local camera:              Camera = cloneref(workspace.CurrentCamera);
 local settings = {
     circle = Drawing.new("Circle"),
     screen_middle = (camera.ViewportSize / 2),
+    target = "head"
 };
 
 local screen_middle = settings.screen_middle;
-
-
-
 local circle = settings.circle do
     circle.Visible = false;
     circle.Radius = 120;
@@ -34,9 +32,9 @@ local find_closest = function()
         local i: Player = PlayerAmt[_];
         local v: Model = workspace.Viewmodels.FindFirstChild(workspace.Viewmodels, "Viewmodels/" .. i.Name);
         if (not v) then continue end;
-        local Torso: Part = v.WaitForChild(v, aimbot.target);
+        local Torso: Part = v.WaitForChild(v, settings.target);
         if (not Torso) then continue end;
-        if (not v.FindFirstChild(v, "EnemyHighlight")) then continue end;
+        if (not v:FindFirstChild("EnemyHighlight")) then continue end;
         local Point, On = to_view_point(Torso.Position);
         if (not On) then continue end;
         local ScreenDistance = (Point - screen_middle).Magnitude
@@ -48,9 +46,6 @@ local find_closest = function()
     end;
     return Player, Closest, SPos;
 end;
-
-
-
 
 aimbot.init = function()
     user_input_service = get_service("UserInputService");
