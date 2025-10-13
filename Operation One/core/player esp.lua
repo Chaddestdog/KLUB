@@ -107,6 +107,7 @@ rawset(player_esp, "set_player_esp", newcclosure(function(character: Model)
         has_esp[character] = nil;
         health_bar_inner:Destroy();
         health_bar_outer:Destroy();
+        skeleton:Destroy();
         c2:Disconnect();
         c1, c2, health_bar_inner, health_bar_outer = nil, nil, nil, nil;
     end);
