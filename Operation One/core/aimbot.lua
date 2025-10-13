@@ -14,9 +14,9 @@ local settings = {
     smoothing = 200,
     pressed = "aiming"
 };
+
 local screen_middle = settings.screen_middle;
 local pressed = settings.pressed;
-
 local circle = settings.circle do
     circle.Visible = false;
     circle.Radius = 120;
