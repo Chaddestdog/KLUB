@@ -16,7 +16,7 @@ local settings = {
 };
 
 local screen_middle = settings.screen_middle;
-local pressed = settings.pressed;
+
 local circle = settings.circle do
     circle.Visible = false;
     circle.Radius = 120;
@@ -28,10 +28,10 @@ end;
 
 local get_useable = function()
     return (
-       pressed == "None"     and true
-    or pressed == "shooting" and user_input_service:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) and true
-    or pressed == "aiming"   and user_input_service:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) and true
-    or pressed == "any"      and (user_input_service:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) or user_input_service:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)) and true) or false;
+       settings.pressed == "None"     and true
+    or settings.pressed == "shooting" and user_input_service:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) and true
+    or settings.pressed == "aiming"   and user_input_service:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) and true
+    or settings.pressed == "any"      and (user_input_service:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) or user_input_service:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)) and true) or false;
 end;
 
 local find_closest = function()
