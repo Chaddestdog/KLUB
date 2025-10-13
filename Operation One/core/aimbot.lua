@@ -17,6 +17,7 @@ local circle = settings.circle do
     circle.Filled = false;
     circle.Thickness = 1;
     circle.Color = Color3.new(1, 1, 1);
+    circle.Position = screen_middle;
 end;
 
 local aim_at = newcclosure(function(pos: Vector2)
