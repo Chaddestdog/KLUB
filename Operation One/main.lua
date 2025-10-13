@@ -1,1 +1,89 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/mainstreamed/amongus-hook/refs/heads/main/drawingfix.lua",true))();
+if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() until (game:IsLoaded() and getgenv().drawingLoaded) end do
+    if (getgenv().loaded) then return end;
 
+    do -- includes
+
+        local inculdes = {
+            "sdk/memory.lua",
+            "sdk/misc.lua",
+            "core/aimbot.lua",
+            "core/player esp.lua"
+        };
+
+        local inits = {};
+
+        for _, file in next, (inculdes) do
+            for i, v in next, (loadstring(game:HttpGet("https://raw.githubusercontent.com/Chaddestdog/KLUB/refs/heads/main/Operation%20One/" .. file, true))()) do
+                if (i == "init") then
+                    table.insert(inits, v);
+                    continue;
+                end;
+                rawset(getfenv(1), i, v);
+            end;
+        end;
+
+        for i, v in next, (inits) do
+            v();
+        end;
+
+    end;
+
+    local camera:               Camera = cloneref(workspace.CurrentCamera);
+    local screen_middle:        Vector2 = (camera.ViewportSize / 2);
+    local players:              Players = get_service("Players");
+    local local_player:         Player = cloneref(players.LocalPlayer);
+    local replicated_storage:   ReplicatedStorage = get_service("ReplicatedStorage");
+    local run_service:          RunService = get_service("RunService");
+    local rbx_env:              table = getrenv();
+    local viewmodels:           Folder = workspace:FindFirstChild("Viewmodels");
+
+
+    do --// esp
+        for i, v in next, (viewmodels:GetChildren()) do
+            set_player_esp(v);
+        end;
+
+        viewmodels.ChildAdded:Connect(function(child: Instance)
+            set_player_esp(child)
+        end);
+    end;
+
+    do --// ui stuff
+        local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main/Library.lua"))()
+        local theme_manager = loadstring(game:HttpGet("https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main/addons/ThemeManager.lua"))()
+        local save_manager = loadstring(game:HttpGet("https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main/addons/SaveManager.lua"))()
+        
+        local window = library:CreateWindow({Title = "KLUB | Pid: " .. game.PlaceVersion, Center = true, AutoShow = true, TabPadding = 8, MenuFadeTime = 0.2});
+        
+        local combat = window:AddTab("Combat") do
+            
+        end;
+
+        local esp = window:AddTab("ESP") do
+
+            local player_esp_groupbox = esp:AddLeftGroupbox("Player") do
+
+                player_esp_groupbox:AddToggle('player_esp_health_bar', {Text = "Health Bar", Default = false, Callback = function(value: boolean)
+                    esp_player_settings.health_bar = value;
+                end});
+
+            end;
+
+        end;
+
+        local ui_settings = window:AddTab("UI Settings") do
+            theme_manager:SetLibrary(library);
+            save_manager:SetLibrary(library);
+            save_manager:IgnoreThemeSettings();
+            save_manager:SetIgnoreIndexes({"MenuKeybind"});
+            theme_manager:SetFolder("KLUB");
+            save_manager:SetFolder("KLUB/Operation One");
+            save_manager:BuildConfigSection(save_manager);
+            theme_manager:ApplyToTab(save_manager);
+            save_manager:LoadAutoloadConfig();
+        end;
+    end;
+
+    getgenv().loaded = true;
+end;
