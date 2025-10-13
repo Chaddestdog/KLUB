@@ -65,6 +65,7 @@ end;
 
 aimbot.init = function()
     user_input_service = get_service("UserInputService");
+    run_service = get_service("RunService");
     players = get_service("Players");
     on_esp_ran(function(has_esp: table, point: Vector2)
         local player, closest, screen_pos, aim_part = find_closest();
