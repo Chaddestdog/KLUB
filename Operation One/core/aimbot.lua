@@ -65,7 +65,13 @@ aimbot.init = function()
     on_esp_ran(function(has_esp: table, point: Vector2)
         local player, closest, screen_pos, aim_part = find_closest();
         if (not (player and closest)) then return end;
-        if (user_input_service.MouseBehavior == Enum.MouseBehavior.Default or not get_useable() or not settings.enabled) then return end;
+        
+        if (user_input_service.MouseBehavior == Enum.MouseBehavior.Default or not get_useable() or not settings.enabled) then
+            start = 0;
+            rot = Vector2.new();
+            return;
+        end;
+
         start += (run_service.RenderStepped:Wait() * 1000);
         local lerp = math.clamp(start / settings.smoothing, 0, 1);
         local base_cfrmae = camera.CFrame:Lerp(CFrame.lookAt(camera.CFrame.Position, aim_part.CFrame.Position, Vector3.new(0, 1, 0)), (1 - (1 - lerp) ^ 2));
