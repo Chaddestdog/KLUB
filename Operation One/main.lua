@@ -76,7 +76,6 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
             theme_manager:SetLibrary(library);
             save_manager:SetLibrary(library);
             save_manager:IgnoreThemeSettings();
-            save_manager:SetIgnoreIndexes({"MenuKeybind"});
             theme_manager:SetFolder("KLUB");
             save_manager:SetFolder("KLUB/Operation One");
             save_manager:BuildConfigSection(ui_settings);
