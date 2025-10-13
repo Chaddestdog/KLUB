@@ -11,6 +11,13 @@ end));
 
 aimbot.init = function()
     user_input_service = get_service("UserInputService");
+    on_esp_ran(function(has_esp: table)
+        print(has_esp.name)
+
+
+
+
+    end);
 end;
 
 return aimbot;
