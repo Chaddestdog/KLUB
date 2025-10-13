@@ -5,7 +5,6 @@ local players:             Players;
 local camera:              Camera = cloneref(workspace.CurrentCamera);
 local start = 0;
 local rot = Vector2.new();
-local running = false;
 
 local settings = {
     enabled = false,
@@ -71,37 +70,21 @@ aimbot.init = function()
     user_input_service = get_service("UserInputService");
     run_service = get_service("RunService");
     players = get_service("Players");
-
     on_esp_ran(function(has_esp: table, point: Vector2)
         local player, closest, screen_pos, aim_part = find_closest();
-        if (not (player and closest and aim_part)) then
-            running = false;
-            return;
-        end;
-
-        if (user_input_service.MouseBehavior == Enum.MouseBehavior.Default) then
-            running = false;
-            return;
-        end;
-
-        if (not running) then
-            start = 0;
-            rot = Vector2.zero;
-            running = true;
-        end;
-
+        if (not (player and closest)) then return end;
+        if (user_input_service.MouseBehavior == Enum.MouseBehavior.Default) then return end;
         start += (run_service.RenderStepped:Wait() * 1000);
-        local lerp = math.clamp((start / settings.smoothing), 0, 1);
-
-        local goal_cframe = CFrame.lookAt(camera.CFrame.Position, aim_part.CFrame.Position, Vector3.new(0, 1, 0));
-        local base_cframe = camera.CFrame:Lerp(goal_cframe, (1 - (1 - lerp) ^ 2));
-
+        local lerp = math.clamp(start / settings.smoothing, 0, 1);
+        local base_cfrmae = camera.CFrame:Lerp(CFrame.lookAt(camera.CFrame.Position, aim_part.CFrame.Position, Vector3.new(0, 1, 0)), (1 - (1 - lerp) ^ 2));
         rot += (user_input_service:GetMouseDelta() * 0.0005);
-        camera.CFrame = (base_cframe * CFrame.Angles(0, -rot.X, 0) * CFrame.Angles(-rot.Y, 0, 0));
+
+        camera.CFrame = base_cfrmae * CFrame.Angles(0, -rot.X, 0) * CFrame.Angles(-rot.Y, 0, 0);
 
         if (lerp >= 1) then
             start = 0;
-            running = true;
+            rot = Vector2.new();
+            return;
         end;
     end);
 end;
