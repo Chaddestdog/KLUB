@@ -8,6 +8,7 @@ local rot = Vector2.new();
 
 local settings = {
     enabled = false,
+    silent = false,
     circle = Drawing.new("Circle"),
     screen_middle = (camera.ViewportSize / 2),
     target = "head",
@@ -62,10 +63,11 @@ aimbot.init = function()
     user_input_service = get_service("UserInputService");
     run_service = get_service("RunService");
     players = get_service("Players");
+
     on_esp_ran(function(has_esp: table, point: Vector2)
         local player, closest, screen_pos, aim_part = find_closest();
         if (not (player and closest)) then return end;
-        
+
         if (user_input_service.MouseBehavior == Enum.MouseBehavior.Default or not get_useable() or not settings.enabled) then
             start = 0;
             rot = Vector2.new();
@@ -85,6 +87,18 @@ aimbot.init = function()
             return;
         end;
     end);
+
+    local old_cframe_new = clonefunction(CFrame.new);
+    hook_function(CFrame.new, function(...)
+        if (debug.info(3, 'n') == "send_shoot" and settings.enabled and settings.silent and get_useable()) then
+            local player, closest, screen_pos, aim_part = find_closest();
+            if (player and closest) then
+                debug.setstack(3, 6, CFrame.lookAt(debug.getstack(3, 3).Position, aim_part.Position));
+            end;
+        end;
+        return old_cframe_new(...);
+    end);
+
 end;
 
 return aimbot;
