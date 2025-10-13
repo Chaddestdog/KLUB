@@ -68,7 +68,7 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
                     aimbot_settings.pressed = Value;
                 end});
 
-                aimbot_groupbox:AddDropdown('aimbot_target', {Values = {"head", "torso"} , Default = 1, Multi = false, Text = 'Key', Callback = function(Value)
+                aimbot_groupbox:AddDropdown('aimbot_target', {Values = {"head", "torso"} , Default = 1, Multi = false, Text = 'Target', Callback = function(Value)
                     aimbot_settings.target = Value;
                 end});
 
