@@ -20,15 +20,13 @@ local circle = settings.circle do
     circle.Position = screen_middle;
 end;
 
-local aim_at = newcclosure(function(pos: Vector2)
+local aim_at = newcclosure(function(pos: Vector3)
     if (user_input_service.MouseBehavior == Enum.MouseBehavior.Default) then return end;
-    local mouse_sen = (user_input_service.MouseDeltaSensitivity);
-    local mouse_pos = user_input_service:GetMouseLocation() * 0.5;
-    mousemoverel(((pos.X - mouse_pos.X) / mouse_sen) / mouse_sen, ((pos.Y - mouse_pos.Y) / mouse_sen) / mouse_sen);
+    camera.CFrame = CFrame.lookAt(camera.CFrame.Position, pos, Vector3.new(0, 1, 0));
 end);
 
 local find_closest = function()
-    local PlayerAmt, Closest, Player, Distance, SPos = players:GetPlayers(), nil, nil, math.huge, Vector2.new();
+    local PlayerAmt, Closest, Player, Distance, SPos, Aimpart = players:GetPlayers(), nil, nil, math.huge, Vector2.new(), nil;
     for _ = 2, #PlayerAmt do 
         local i: Player = PlayerAmt[_];
         local v: Model = workspace.Viewmodels.FindFirstChild(workspace.Viewmodels, "Viewmodels/" .. i.Name);
@@ -44,17 +42,18 @@ local find_closest = function()
         Closest = v;
         Player = i;
         SPos = Point;
+        Aimpart = Torso
     end;
-    return Player, Closest, SPos;
+    return Player, Closest, SPos, Aimpart;
 end;
 
 aimbot.init = function()
     user_input_service = get_service("UserInputService");
     players = get_service("Players");
     on_esp_ran(function(has_esp: table, point: Vector2)
-        local player, closest, screen_pos = find_closest();
+        local player, closest, screen_pos, aim_part = find_closest();
         if (not (player and closest)) then return end;
-        aim_at(screen_pos);
+        aim_at(aim_part.CFrame.Position);
     end);
 end;
 
