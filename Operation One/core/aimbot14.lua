@@ -11,10 +11,12 @@ local settings = {
     circle = Drawing.new("Circle"),
     screen_middle = (camera.ViewportSize / 2),
     target = "head",
-    smoothing = 20
+    smoothing = 200,
+    pressed = "aiming"
 };
-
 local screen_middle = settings.screen_middle;
+local pressed = settings.pressed;
+
 local circle = settings.circle do
     circle.Visible = false;
     circle.Radius = 120;
@@ -24,23 +26,12 @@ local circle = settings.circle do
     circle.Position = screen_middle;
 end;
 
-local aim_at = newcclosure(function(pos: Vector3)
-    if (user_input_service.MouseBehavior == Enum.MouseBehavior.Default) then return end;
-    local start = 0;
-    local rot = Vector2.new();
-    local c1; c1 = run_service.RenderStepped:Connect(function(delta: number)
-        start += (delta * 1000);
-        local lerp = math.clamp(start / settings.smoothing, 0, 1);
-        local base_cfrmae = camera.CFrame:Lerp(CFrame.lookAt(camera.CFrame.Position, pos, Vector3.new(0, 1, 0)), (1 - (1 - lerp) ^ 2));
-        rot += (user_input_service:GetMouseDelta() * 0.0005);
-
-        camera.CFrame = base_cfrmae * CFrame.Angles(0, -rot.X, 0) * CFrame.Angles(-rot.Y, 0, 0);
-
-        if (lerp >= 1) then
-            c1:Disconnect();
-        end;
-    end);
-end);
+local get_useable = function()
+    return (pressed == "None" and true 
+    or pressed == "shooting" and user_input_service:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) and true
+    or pressed == "aiming" and user_input_service:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) and true
+    or pressed == "any" and (user_input_service:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) or user_input_service:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)) and true) or false;
+end;
 
 local find_closest = function()
     local PlayerAmt, Closest, Player, Distance, SPos, Aimpart = players:GetPlayers(), nil, nil, math.huge, Vector2.new(), nil;
@@ -73,7 +64,7 @@ aimbot.init = function()
     on_esp_ran(function(has_esp: table, point: Vector2)
         local player, closest, screen_pos, aim_part = find_closest();
         if (not (player and closest)) then return end;
-        if (user_input_service.MouseBehavior == Enum.MouseBehavior.Default) then return end;
+        if (user_input_service.MouseBehavior == Enum.MouseBehavior.Default or not get_useable()) then return end;
         start += (run_service.RenderStepped:Wait() * 1000);
         local lerp = math.clamp(start / settings.smoothing, 0, 1);
         local base_cfrmae = camera.CFrame:Lerp(CFrame.lookAt(camera.CFrame.Position, aim_part.CFrame.Position, Vector3.new(0, 1, 0)), (1 - (1 - lerp) ^ 2));
