@@ -6,15 +6,16 @@ local camera:              Camera = cloneref(workspace.CurrentCamera);
 
 
 local settings = {
+    enabled = false,
     circle = Drawing.new("Circle"),
     screen_middle = (camera.ViewportSize / 2),
     target = "head",
-    smoothing = 150
+    smoothing = 20
 };
 
 local screen_middle = settings.screen_middle;
 local circle = settings.circle do
-    circle.Visible = true;
+    circle.Visible = false;
     circle.Radius = 120;
     circle.Filled = false;
     circle.Thickness = 1;
@@ -30,9 +31,9 @@ local aim_at = newcclosure(function(pos: Vector3)
         start += (delta * 1000);
         local lerp = math.clamp(start / settings.smoothing, 0, 1);
         local base_cfrmae = camera.CFrame:Lerp(CFrame.lookAt(camera.CFrame.Position, pos, Vector3.new(0, 1, 0)), (1 - (1 - lerp) ^ 2));
-        rot += (user_input_service:GetMouseDelta() * 0.0003)
+        rot += (user_input_service:GetMouseDelta() * 0.0005);
 
-        camera.CFrame = base_cfrmae * CFrame.Angles(0, -rot.X, 0) * CFrame.Angles(-rot.Y, 0, 0)
+        camera.CFrame = base_cfrmae * CFrame.Angles(0, -rot.X, 0) * CFrame.Angles(-rot.Y, 0, 0);
 
         if (lerp >= 1) then
             c1:Disconnect();
@@ -62,6 +63,8 @@ local find_closest = function()
     return Player, Closest, SPos, Aimpart;
 end;
 
+rawset(aimbot, "aimbot_settings", settings);
+
 aimbot.init = function()
     user_input_service = get_service("UserInputService");
     run_service = get_service("RunService");
@@ -69,7 +72,23 @@ aimbot.init = function()
     on_esp_ran(function(has_esp: table, point: Vector2)
         local player, closest, screen_pos, aim_part = find_closest();
         if (not (player and closest)) then return end;
-        aim_at(aim_part.CFrame.Position);
+        if (user_input_service.MouseBehavior == Enum.MouseBehavior.Default) then return end;
+        local start = 0;
+        local rot = Vector2.new();
+        local c1; c1 = run_service.RenderStepped:Connect(function(delta: number)
+            start += (delta * 1000);
+            local lerp = math.clamp(start / settings.smoothing, 0, 1);
+            local base_cfrmae = camera.CFrame:Lerp(CFrame.lookAt(camera.CFrame.Position, aim_part.CFrame.Position, Vector3.new(0, 1, 0)), (1 - (1 - lerp) ^ 2));
+            rot += (user_input_service:GetMouseDelta() * 0.0005);
+
+            camera.CFrame = base_cfrmae * CFrame.Angles(0, -rot.X, 0) * CFrame.Angles(-rot.Y, 0, 0);
+
+            if (lerp >= 1) then
+                start = 0;
+                rot = Vector2.new();
+                c1:Disconnect();
+            end;
+        end);
     end);
 end;
 
