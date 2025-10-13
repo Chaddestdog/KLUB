@@ -63,6 +63,10 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
                 aimbot_groupbox:AddToggle('aimbot_enable', {Text = "Enable", Default = false, Callback = function(value: boolean)
                     aimbot_settings.enabled = value;
                 end});
+
+                aimbot_groupbox:AddToggle('aimbot_silent', {Text = "Silent", Default = false, Callback = function(value: boolean)
+                    aimbot_settings.silent = value;
+                end});
                 
                 aimbot_groupbox:AddDropdown('aimbot_pressed', {Values = {"None", "shooting", "aiming", "any"} , Default = 3, Multi = false, Text = 'Key', Callback = function(Value)
                     aimbot_settings.pressed = Value;
