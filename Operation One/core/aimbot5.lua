@@ -1,13 +1,15 @@
 local aimbot = {};
 local user_input_service:  UserInputService;
-local players:             Players
+local run_service:         RunService;
+local players:             Players;
 local camera:              Camera = cloneref(workspace.CurrentCamera);
 
 
 local settings = {
     circle = Drawing.new("Circle"),
     screen_middle = (camera.ViewportSize / 2),
-    target = "head"
+    target = "head",
+    smoothing = 0
 };
 
 local screen_middle = settings.screen_middle;
@@ -22,7 +24,21 @@ end;
 
 local aim_at = newcclosure(function(pos: Vector3)
     if (user_input_service.MouseBehavior == Enum.MouseBehavior.Default) then return end;
-    camera.CFrame = CFrame.lookAt(camera.CFrame.Position, pos, Vector3.new(0, 1, 0));
+    local goal_cframe = CFrame.lookAt(camera.CFrame.Position, pos, Vector3.new(0, 1, 0));
+    local start = 0;
+    local rot = Vector2.new();
+    local c1; c1 = run_service.RenderStepped:Connect(function(delta: number)
+        start += (delta * 1000);
+        local lerp = math.clamp(start / settings.smoothing, 0, 1);
+        local base_cfrmae = camera.CFrame:Lerp(goal_cframe, (1 - (1 - lerp) ^ 2));
+        rot += (user_input_service:GetMouseDelta() * settings.smoothing)
+
+        camera.CFrame = base_cfrmae * CFrame.Angles(0, -rot.X, 0) * CFrame.Angles(-rot.Y, 0, 0)
+
+        if (lerp >= 1) then
+            c1:Disconnect();
+        end;
+    end);
 end);
 
 local find_closest = function()
