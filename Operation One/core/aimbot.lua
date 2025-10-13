@@ -68,7 +68,7 @@ aimbot.init = function()
         local player, closest, screen_pos, aim_part = find_closest();
         if (not (player and closest)) then return end;
 
-        if (user_input_service.MouseBehavior == Enum.MouseBehavior.Default or not get_useable() or not settings.enabled and settings.silent) then
+        if (user_input_service.MouseBehavior == Enum.MouseBehavior.Default or not get_useable() or not settings.enabled or settings.silent) then
             start = 0;
             rot = Vector2.new();
             return;
