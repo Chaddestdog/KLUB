@@ -57,16 +57,44 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
         local window = library:CreateWindow({Title = "KLUB | Pid: " .. game.PlaceVersion, Center = true, AutoShow = true, TabPadding = 8, MenuFadeTime = 0.2});
         
         local combat = window:AddTab("Combat") do
-            
+
+            local aimbot_groupbox = combat:AddLeftGroupbox("Aimbot") do
+                
+                aimbot_groupbox:AddToggle('aimbot_enable', {Text = "Enable", Default = false, Callback = function(value: boolean)
+                    aimbot_settings.enabled = value;
+                end});
+                
+                aimbot_groupbox:AddDropdown('aimbot_pressed', {Values = {"None", "shooting", "aiming", "any"} , Default = 3, Multi = false, Text = 'Key', Callback = function(Value)
+                    aimbot_settings.pressed = Value;
+                end});
+
+                aimbot_groupbox:AddDropdown('aimbot_target', {Values = {"head", "torso"} , Default = 1, Multi = false, Text = 'Key', Callback = function(Value)
+                    aimbot_settings.target = Value;
+                end});
+
+                aimbot_groupbox:AddSlider('aimbot_smoothing', {Text = 'Smoothing', Default = 1, Min = 1, Max = 1000, Rounding = 0, Compact = false, Callback = function(Value)
+                    aimbot_settings.smoothing = Value;
+                end});
+
+                local aimbot_fov_enable = aimbot_groupbox:AddToggle('aimbot_fov_enable', {Text = "Fov", Default = false, Callback = function(value: boolean)
+                    aimbot_settings.circle.Visible = value;
+                end});
+
+                aimbot_fov_enable:AddColorPicker('aimbot_fov_color', {Default = Color3.fromRGB(255, 255, 255), Title = "Fov Color", Callback = function(value: boolean)
+                    aimbot_settings.circle.Color = value;
+                end});
+
+                aimbot_groupbox:AddSlider('aimbot_fov_size', {Text = 'Fov Size', Default = 1, Min = 1, Max = 1000, Rounding = 0, Compact = false, Callback = function(Value)
+                    aimbot_settings.circle.Radius = Value;
+                end});
+
+            end;
+
         end;
 
         local esp = window:AddTab("ESP") do
 
             local player_esp_groupbox = esp:AddLeftGroupbox("Player") do
-
-                player_esp_groupbox:AddToggle('player_esp_health_bar', {Text = "Health Bar", Default = false, Callback = function(value: boolean)
-                    esp_player_settings.health_bar = value;
-                end});
 
                 local player_esp_skelton = player_esp_groupbox:AddToggle('player_esp_skelton', {Text = "Skelton", Default = false, Callback = function(value: boolean)
                     esp_player_settings.skelton = value;
@@ -74,6 +102,11 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
 
                 player_esp_skelton:AddColorPicker('player_esp_skelton_color', {Default = Color3.fromRGB(255, 255, 255), Title = "Skelton Color", Callback = function(value: boolean)
                     esp_player_settings.skelton_color = value;
+                end});
+
+                
+                player_esp_groupbox:AddToggle('player_esp_health_bar', {Text = "Health Bar", Default = false, Callback = function(value: boolean)
+                    esp_player_settings.health_bar = value;
                 end});
 
             end;
