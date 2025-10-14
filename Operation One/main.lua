@@ -8,7 +8,8 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
             "sdk/memory.lua",
             "sdk/misc.lua",
             "core/aimbot.lua",
-            "core/player esp.lua"
+            "core/player esp.lua",
+            "core/weapon modifications.lua"
         };
 
         local inits = {};
@@ -53,7 +54,6 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
         local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main/Library.lua"))()
         local theme_manager = loadstring(game:HttpGet("https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main/addons/ThemeManager.lua"))()
         local save_manager = loadstring(game:HttpGet("https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main/addons/SaveManager.lua"))()
-        
         local window = library:CreateWindow({Title = "KLUB | Pid: " .. game.PlaceVersion, Center = true, AutoShow = true, TabPadding = 8, MenuFadeTime = 0.2});
         
         local combat = window:AddTab("Combat") do
@@ -64,7 +64,7 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
                     aimbot_settings.enabled = value;
                 end});
 
-                aimbot_groupbox:AddToggle('aimbot_silent', {Text = "Silent", Default = false, Callback = function(value: boolean)
+                aimbot_groupbox:AddToggle('aimbot_psilent', {Text = "PSilent", Default = false, Callback = function(value: boolean)
                     aimbot_settings.silent = value;
                 end});
                 
@@ -94,6 +94,42 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
 
             end;
 
+            local weapon_modifications_groupbox = combat:AddRightGroupbox("Weapon Modifications") do
+
+                weapon_modifications_groupbox:AddToggle('weapon_modifications_no_spread', {Text = "No Spread", Default = false, Callback = function(value: boolean)
+                    weapon_modifications_settings.no_spread = value;
+                end});
+
+                weapon_modifications_groupbox:AddToggle('weapon_modifications_fast_reload', {Text = "Fast Reload", Default = false, Callback = function(value: boolean)
+                    weapon_modifications_settings.fast_reload = value;
+                end});
+
+                weapon_modifications_groupbox:AddSlider('weapon_modifications_recoil_x', {Text = 'Recoil X', Default = 100, Min = 0, Max = 100, Rounding = 0, Compact = false, Callback = function(Value)
+                    weapon_modifications_settings.recoil_x = (Value / 100);
+                end});
+
+                weapon_modifications_groupbox:AddSlider('weapon_modifications_recoil_y', {Text = 'Recoil Y', Default = 100, Min = 0, Max = 100, Rounding = 0, Compact = false, Callback = function(Value)
+                    weapon_modifications_settings.recoil_y = (Value / 100);
+                end});
+
+                --[[weapon_modifications_groupbox:AddSlider('weapon_modifications_firerate_multiplier', {Text = 'Firerate Multiplier', Default = 1, Min = 1, Max = 10, Rounding = 0, Compact = false, Callback = function(Value)
+                    -- soon as i find a better method.
+                end});]]
+
+            end;
+        --[[ soon im lazy af deal with it
+            local other_groupbox = combat:AddRightGroupbox("Other") do
+                
+                other_groupbox:AddDropdown('other_hitbox_override', {Values = {"off", "head", "torso"} , Default = 1, Multi = false, Text = 'Hitbox Override', Callback = function(Value)
+
+                end});
+
+                other_groupbox:AddToggle('other_doubletap', {Text = "Doubletap", Default = false, Callback = function(value: boolean)
+                   
+                end});
+
+            end;
+        ]]
         end;
 
         local esp = window:AddTab("ESP") do
