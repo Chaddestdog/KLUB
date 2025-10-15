@@ -14,8 +14,8 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
 
         local inits = {};
 
-        for _, file in next, (inculdes) do
-            for i, v in next, (loadstring(game:HttpGet("https://raw.githubusercontent.com/Chaddestdog/KLUB/refs/heads/main/Operation%20One/" .. file, true))()) do
+        for _, file in (inculdes) do
+            for i, v in (loadstring(game:HttpGet("https://raw.githubusercontent.com/Chaddestdog/KLUB/refs/heads/main/Operation%20One/" .. file, true))()) do
                 if (i == "init") then
                     table.insert(inits, v);
                     continue;
@@ -24,7 +24,7 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
             end;
         end;
 
-        for i, v in next, (inits) do
+        for i, v in (inits) do
             v();
         end;
 
@@ -41,7 +41,7 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
 
 
     do --// esp
-        for i, v in next, (viewmodels:GetChildren()) do
+        for i, v in (viewmodels:GetChildren()) do
             set_player_esp(v);
         end;
 
