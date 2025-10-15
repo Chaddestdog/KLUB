@@ -8,14 +8,14 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
             "sdk/memory.lua",
             "sdk/misc.lua",
             "core/aimbot.lua",
-            "core/player esp.lua",
-            "core/weapon modifications.lua"
+            "core/player%20esp.lua",
+            "core/weapon%20modifications.lua"
         };
 
         local inits = {};
 
         for _, file in next, (inculdes) do
-            for i, v in next, (loadstring(game:HttpGet("https://raw.githubusercontent.com/Chaddestdog/KLUB/refs/heads/main/Operation%20One/" .. string.gsub(file, " ", "%20"), true))()) do
+            for i, v in (loadstring(game:HttpGet("https://raw.githubusercontent.com/Chaddestdog/KLUB/refs/heads/main/Operation%20One/" ..file, true))()) do
                 if (i == "init") then
                     table.insert(inits, v);
                     continue;
