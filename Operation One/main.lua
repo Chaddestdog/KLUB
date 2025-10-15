@@ -8,14 +8,14 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
             "sdk/memory.lua",
             "sdk/misc.lua",
             "core/aimbot.lua",
-            "core/player%20esp.lua",
-            "core/weapon%20modifications.lua"
+            "core/player esp.lua",
+            "core/weapon modifications.lua"
         };
 
         local inits = {};
 
-        for _, file in (inculdes) do
-            for i, v in (loadstring(game:HttpGet("https://raw.githubusercontent.com/Chaddestdog/KLUB/refs/heads/main/Operation%20One/" .. file, true))()) do
+        for _, file in next, (inculdes) do
+            for i, v in next, (loadstring(game:HttpGet("https://raw.githubusercontent.com/Chaddestdog/KLUB/refs/heads/main/Operation%20One/" .. string.gsub(file, " ", "%20"), true))()) do
                 if (i == "init") then
                     table.insert(inits, v);
                     continue;
@@ -24,7 +24,7 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
             end;
         end;
 
-        for i, v in (inits) do
+        for i, v in next, (inits) do
             v();
         end;
 
@@ -41,7 +41,7 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
 
 
     do --// esp
-        for i, v in (viewmodels:GetChildren()) do
+        for i, v in next, (viewmodels:GetChildren()) do
             set_player_esp(v);
         end;
 
@@ -162,6 +162,7 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
             save_manager:BuildConfigSection(ui_settings);
             theme_manager:ApplyToTab(ui_settings);
             save_manager:LoadAutoloadConfig();
+            replicated_storage:FindFirstChild("RemoteEvent"):FireServer('z', 5); --// anti admin
         end;
     end;
 
