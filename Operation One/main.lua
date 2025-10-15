@@ -8,8 +8,8 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
             "sdk/memory.lua",
             "sdk/misc.lua",
             "core/aimbot.lua",
-            "core/player esp.lua",
-            "core/weapon modifications.lua"
+            "core/player%20esp.lua",
+            "core/weapon%20modifications.lua"
         };
 
         local inits = {};
