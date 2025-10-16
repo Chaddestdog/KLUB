@@ -8,8 +8,12 @@ local viewmodels:          Folder = workspace.Viewmodels;
 local settings = {
     skin = "Default",
     scope = "Default",
+    barrel = "Default",
+    charm = "Default",
+    mag = "Default",
+    stock = "Default",
+    grip = "Default"
 };
-
 
 local get_local_player_gun = function()
     local gun, local_player_char = nil, viewmodels:FindFirstChild("Viewmodels/" .. local_player.Name);
@@ -34,7 +38,6 @@ rawset(attachment_editor, "set_skin", newcclosure(function()
     end;
 end));
 
-
 rawset(attachment_editor, "set_scope", newcclosure(function()
     local gun = get_local_player_gun();
     if (not gun) then return end;
@@ -50,6 +53,96 @@ rawset(attachment_editor, "set_scope", newcclosure(function()
             end;
         end;
         attachment_modules["Scope"].apply(require(module), gun);
+    end;
+end));
+
+rawset(attachment_editor, "set_barrel", newcclosure(function()
+    local gun = get_local_player_gun();
+    if (not gun) then return end;
+
+    if (settings.barrel == "Default") then
+        attachment_modules["Barrel"].remove(attachment_modules["Barrel"], gun);
+    else
+        local module;
+        for i, v in next, (attachment_modules["Barrel"].module:GetDescendants()) do
+            if (v.Name == settings.barrel) then
+                module = v;
+                break;
+            end;
+        end;
+        attachment_modules["Barrel"].apply(require(module), gun);
+    end;
+end));
+
+rawset(attachment_editor, "set_charm", newcclosure(function()
+    local gun = get_local_player_gun();
+    if (not gun) then return end;
+
+    if (settings.charm == "Default") then
+        attachment_modules["Charm"].remove(attachment_modules["Charm"], gun);
+    else
+        local module;
+        for i, v in next, (attachment_modules["Charm"].module:GetDescendants()) do
+            if (v.Name == settings.charm) then
+                module = v;
+                break;
+            end;
+        end;
+        attachment_modules["Charm"].apply(require(module), gun);
+    end;
+end));
+
+rawset(attachment_editor, "set_mag", newcclosure(function()
+    local gun = get_local_player_gun();
+    if not gun then return end;
+
+    if (settings.mag == "Default") then
+        attachment_modules["Mag"].remove(attachment_modules["Mag"], gun);
+    else
+        local module;
+        for i, v in next, (attachment_modules["Mag"].module:GetDescendants()) do
+            if (v.Name == settings.mag) then
+                module = v;
+                break;
+            end;
+        end;
+        attachment_modules["Mag"].apply(require(module), gun);
+    end;
+end));;
+
+rawset(attachment_editor, "set_stock", newcclosure(function()
+    local gun = get_local_player_gun();
+    if not gun then return end;
+
+    if (settings.stock == "Default") then
+        attachment_modules["Stock"].remove(attachment_modules["Stock"], gun);
+    else
+        local module
+        for i, v in next, (attachment_modules["Stock"].module:GetDescendants()) do
+            if (v.Name == settings.stock) then
+                module = v;
+                break;
+            end;
+        end;
+        attachment_modules["Stock"].apply(require(module), gun);
+    end;
+end));
+
+rawset(attachment_editor, "set_grip", newcclosure(function()
+    local gun = get_local_player_gun();
+    if not gun then return end;
+
+    if (settings.grip == "Default") then
+        attachment_modules["Grip"].remove(attachment_modules["Grip"], gun);
+    else
+        local module;
+        for i, v in next, (attachment_modules["Grip"].module:GetDescendants()) do
+            if (v.Name == settings.grip) then
+                module = v;
+                break;
+            end;
+        end;
+        attachment_modules["Grip"].apply(require(module), gun);
     end;
 end));
 
