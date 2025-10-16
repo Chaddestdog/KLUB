@@ -61,7 +61,7 @@ rawset(attachment_editor, "set_barrel", newcclosure(function()
     if (not gun) then return end;
 
     if (settings.barrel == "Default") then
-        attachment_modules["Barrel"].remove(attachment_modules["Barrel"], gun);
+        --attachment_modules["Barrel"].remove(attachment_modules["Barrel"], gun);
     else
         local module;
         for i, v in next, (attachment_modules["Barrel"].module:GetDescendants()) do
@@ -70,7 +70,7 @@ rawset(attachment_editor, "set_barrel", newcclosure(function()
                 break;
             end;
         end;
-        attachment_modules["Barrel"].apply(require(module), gun);
+        --attachment_modules["Barrel"].apply(require(module), gun);
     end;
 end));
 
@@ -79,7 +79,7 @@ rawset(attachment_editor, "set_charm", newcclosure(function()
     if (not gun) then return end;
 
     if (settings.charm == "Default") then
-        attachment_modules["Charm"].remove(attachment_modules["Charm"], gun);
+       --attachment_modules["Charm"].remove(attachment_modules["Charm"], gun);
     else
         local module;
         for i, v in next, (attachment_modules["Charm"].module:GetDescendants()) do
@@ -88,7 +88,7 @@ rawset(attachment_editor, "set_charm", newcclosure(function()
                 break;
             end;
         end;
-        attachment_modules["Charm"].apply(require(module), gun);
+        --attachment_modules["Charm"].apply(require(module), gun);
     end;
 end));
 
@@ -97,7 +97,7 @@ rawset(attachment_editor, "set_mag", newcclosure(function()
     if not gun then return end;
 
     if (settings.mag == "Default") then
-        attachment_modules["Mag"].remove(attachment_modules["Mag"], gun);
+        --attachment_modules["Mag"].remove(attachment_modules["Mag"], gun);
     else
         local module;
         for i, v in next, (attachment_modules["Mag"].module:GetDescendants()) do
@@ -106,7 +106,7 @@ rawset(attachment_editor, "set_mag", newcclosure(function()
                 break;
             end;
         end;
-        attachment_modules["Mag"].apply(require(module), gun);
+        --attachment_modules["Mag"].apply(require(module), gun);
     end;
 end));;
 
@@ -115,7 +115,7 @@ rawset(attachment_editor, "set_stock", newcclosure(function()
     if not gun then return end;
 
     if (settings.stock == "Default") then
-        attachment_modules["Stock"].remove(attachment_modules["Stock"], gun);
+        --attachment_modules["Stock"].remove(attachment_modules["Stock"], gun);
     else
         local module
         for i, v in next, (attachment_modules["Stock"].module:GetDescendants()) do
@@ -124,7 +124,7 @@ rawset(attachment_editor, "set_stock", newcclosure(function()
                 break;
             end;
         end;
-        attachment_modules["Stock"].apply(require(module), gun);
+        --attachment_modules["Stock"].apply(require(module), gun);
     end;
 end));
 
@@ -133,7 +133,7 @@ rawset(attachment_editor, "set_grip", newcclosure(function()
     if not gun then return end;
 
     if (settings.grip == "Default") then
-        attachment_modules["Grip"].remove(attachment_modules["Grip"], gun);
+        --attachment_modules["Grip"].remove(attachment_modules["Grip"], gun);
     else
         local module;
         for i, v in next, (attachment_modules["Grip"].module:GetDescendants()) do
@@ -142,7 +142,7 @@ rawset(attachment_editor, "set_grip", newcclosure(function()
                 break;
             end;
         end;
-        attachment_modules["Grip"].apply(require(module), gun);
+        --attachment_modules["Grip"].apply(require(module), gun);
     end;
 end));
 
