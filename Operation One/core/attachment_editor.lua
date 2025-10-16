@@ -7,6 +7,7 @@ local viewmodels:          Folder = workspace.Viewmodels;
 
 local settings = {
     skin = "Default",
+    scope = "Default",
 };
 
 
@@ -30,6 +31,19 @@ rawset(attachment_editor, "set_skin", newcclosure(function()
         attachment_modules["Skin"].remove(attachment_modules["Skin"], gun);
     else
         attachment_modules["Skin"].apply(require(attachment_modules["Skin"].module[settings.skin]), gun);
+    end;
+
+end));
+
+
+rawset(attachment_editor, "set_scope", newcclosure(function()
+    local gun = get_local_player_gun();
+    if (not gun) then return end;
+
+    if (settings.scope == "Default") then
+        print("erm");
+    else
+       print(attachment_modules["Skin"].module:FindFirstDescendant(settings.scope));
     end;
 
 end));
