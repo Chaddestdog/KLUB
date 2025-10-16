@@ -44,7 +44,7 @@ rawset(attachment_editor, "set_scope", newcclosure(function()
         print("erm");
     else
         local module;
-        for i, v in next, (attachment_modules["Skin"].module:GetDescendants()) do
+        for i, v in next, (attachment_modules["Scope"].module:GetDescendants()) do
             if (v.Name == settings.scope) then
                 module = v;
                 break
