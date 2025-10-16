@@ -43,7 +43,15 @@ rawset(attachment_editor, "set_scope", newcclosure(function()
     if (settings.scope == "Default") then
         print("erm");
     else
-       print(attachment_modules["Skin"].module:FindFirstDescendant(settings.scope));
+        local module;
+        for i, v in next, (attachment_modules["Skin"].module:GetDescendants()) do
+            if (v.Name == settings.scope) then
+                module = v;
+                break
+            end;
+        end;
+       
+        print(module);
     end;
 
 end));
