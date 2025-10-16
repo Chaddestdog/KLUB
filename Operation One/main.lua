@@ -161,13 +161,14 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
                     attachment_editor_settings.skin = Value;
                 end});
 
-                attachment_editor_groupbox:AddDropdown('attachment_editor_scope', {Values = {"Default", "PSO", "PMII", "ACOG", "Specter", "TA44", "Kobra", "Micro", "XPS", "DeltaPoint", "Primer"} , Default = 1, Multi = false, Text = 'Skin', Callback = function(Value)
+                attachment_editor_groupbox:AddDropdown('attachment_editor_scope', {Values = {"Default", "PSO", "PMII", "ACOG", "Specter", "TA44", "Kobra", "Micro", "XPS", "DeltaPoint", "Primer"} , Default = 1, Multi = false, Text = 'Scope', Callback = function(Value)
                     attachment_editor_settings.scope = Value;
                 end});
 
 
                 attachment_editor_groupbox:AddButton({Text = 'Apply', DoubleClick = false, Func = function()
                     set_skin();
+                    set_scope();
                 end});
             end;
 
