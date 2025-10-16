@@ -8,14 +8,15 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
             "sdk/memory.lua",
             "sdk/misc.lua",
             "core/aimbot.lua",
-            "core/player%20esp.lua",
-            "core/weapon%20modifications.lua"
+            "core/player_esp.lua",
+            "core/weapon_modifications.lua",
+            "core/attachment_editor.lua"
         };
 
         local inits = {};
 
         for _, file in next, (inculdes) do
-            for i, v in (loadstring(game:HttpGet("https://raw.githubusercontent.com/Chaddestdog/KLUB/refs/heads/main/Operation%20One/" ..file, true))()) do
+            for i, v in next, (loadstring(game:HttpGet("https://raw.githubusercontent.com/Chaddestdog/KLUB/refs/heads/main/Operation%20One/" .. file, true))()) do
                 if (i == "init") then
                     table.insert(inits, v);
                     continue;
@@ -38,7 +39,6 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
     local run_service:          RunService = get_service("RunService");
     local rbx_env:              table = getrenv();
     local viewmodels:           Folder = workspace:FindFirstChild("Viewmodels");
-
 
     do --// esp
         for i, v in next, (viewmodels:GetChildren()) do
@@ -152,6 +152,27 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
             end;
 
         end;
+
+        local _local = window:AddTab("Local") do
+
+            local attachment_editor_groupbox = esp:AddLeftGroupbox("Attachment Editor") do
+
+                attachment_editor_groupbox:AddDropdown('attachment_editor_skin', {Values = {"Default", "Golden", "Diamond", "Red", "Green", "Blue", "Halloween", "Yellow", "White", "SnowCamo", "Kalash", "Skulls", "OilSpill", "HazardSkin", "ForestCamo", "ClassicStuds", "DeepRed", "FrenchSticker", "Steyr", "DesertCamo", "Ghillie", "CarbonFiber", "Space"} , Default = 1, Multi = false, Text = 'Skin', Callback = function(Value)
+                    attachment_editor_settings.skin = Value;
+                end});
+
+
+
+
+                attachment_editor_groupbox:AddButton({Text = 'Apply', DoubleClick = false, Func = function()
+                    set_skin();
+                end});
+
+
+            end;
+
+        end;
+
 
         local ui_settings = window:AddTab("UI Settings") do
             theme_manager:SetLibrary(library);
