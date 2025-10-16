@@ -162,7 +162,7 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
             save_manager:BuildConfigSection(ui_settings);
             theme_manager:ApplyToTab(ui_settings);
             save_manager:LoadAutoloadConfig();
-            replicated_storage:FindFirstChild("RemoteEvent"):FireServer('z', 5); --// anti admin
+            --replicated_storage:FindFirstChild("RemoteEvent"):FireServer('z', 5); --// anti admin
         end;
     end;
 
