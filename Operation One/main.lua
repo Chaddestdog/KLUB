@@ -164,7 +164,7 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
                 attachment_editor_groupbox:AddDropdown('attachment_editor_scope', {Values = {"Default", "PSO", "PMII", "ACOG", "Specter", "TA44", "Kobra", "Micro", "XPS", "DeltaPoint", "Primer"} , Default = 1, Multi = false, Text = 'Scope', Callback = function(Value)
                     attachment_editor_settings.scope = Value;
                 end});
-
+--[[
                 attachment_editor_groupbox:AddDropdown('attachment_editor_barrel', {Values = {"Default", "Compensator", "FlashHider", "MuzzleBrake", "Silencer"} , Default = 1, Multi = false, Text = 'Barrel', Callback = function(Value)
                     attachment_editor_settings.barrel = Value;
                 end});
@@ -177,23 +177,23 @@ if (not (game:IsLoaded() and getgenv().drawingLoaded)) then repeat task.wait() u
                     attachment_editor_settings.mag = Value;
                 end});
 
-                --[[attachment_editor_groupbox:AddDropdown('attachment_editor_stock', {Values = {"Default", "SwitchGlock"} , Default = 1, Multi = false, Text = 'Stock', Callback = function(Value)
+                attachment_editor_groupbox:AddDropdown('attachment_editor_stock', {Values = {"Default", "SwitchGlock"} , Default = 1, Multi = false, Text = 'Stock', Callback = function(Value)
                     attachment_editor_settings.stock = Value;
-                end});]]
+                end});
 
                 attachment_editor_groupbox:AddDropdown('attachment_editor_grip', {Values = {"Default", "AngledGrip", "Bipod", "BrazilianShield", "LaserPointer", "TacticalFlashlight", "ThumbGrip", "VerticalGrip"} , Default = 1, Multi = false, Text = 'Grip', Callback = function(Value)
                     attachment_editor_settings.grip = Value;
                 end});
 
-
+]]
                 attachment_editor_groupbox:AddButton({Text = 'Apply', DoubleClick = false, Func = function()
                     set_skin();
                     set_scope();
-                    set_grip();
+                    --set_grip();
                     --set_stock();
-                    set_mag();
-                    set_charm();
-                    set_barrel();
+                    --set_mag();
+                    --set_charm();
+                    --set_barrel();
                 end});
             end;
 
