@@ -5,7 +5,7 @@ local players:             Players;
 local local_player:        Player;
 local viewmodels:          Folder = workspace.Viewmodels;
 
-local setings = {
+local settings = {
     skin = "Default",
 };
 
