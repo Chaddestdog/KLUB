@@ -32,7 +32,6 @@ rawset(attachment_editor, "set_skin", newcclosure(function()
     else
         attachment_modules["Skin"].apply(require(attachment_modules["Skin"].module[settings.skin]), gun);
     end;
-
 end));
 
 
@@ -41,19 +40,17 @@ rawset(attachment_editor, "set_scope", newcclosure(function()
     if (not gun) then return end;
 
     if (settings.scope == "Default") then
-        print("erm");
+        attachment_modules["Scope"].remove(attachment_modules["Scope"], gun);
     else
         local module;
         for i, v in next, (attachment_modules["Scope"].module:GetDescendants()) do
             if (v.Name == settings.scope) then
                 module = v;
-                break
+                break;
             end;
         end;
-       
-        print(module);
+        attachment_modules["Scope"].apply(require(module), gun);
     end;
-
 end));
 
 rawset(attachment_editor, "attachment_editor_settings", settings);
